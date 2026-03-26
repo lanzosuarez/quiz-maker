@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "909a917d-9c9d-4ed1-af4f-38f268bc0f0b",
+		"name": "Quiz Maker API",
+		"description": "Postman collection for the Quiz Maker Node.js + SQLite backend.\nIncludes sample requests and scripts that save IDs to collection variables.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12802038"
+	},
+	"item": [
+		{
+			"name": "Quizzes",
+			"item": [
+				{
+					"name": "List quizzes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/quizzes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"quizzes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create quiz",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"  const json = pm.response.json();",
+									"  if (json && json.id) {",
+									"    pm.collectionVariables.set('quizId', json.id);",
+									"    console.log('quizId set to', json.id);",
+									"  }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"JavaScript Basics\",\n  \"description\": \"A tiny quiz on core JS\",\n  \"timeLimitSeconds\": 300,\n  \"isPublished\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/quizzes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"quizzes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get quiz (with questions)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/quizzes/{{quizId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"quizzes",
+								"{{quizId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update quiz",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"JavaScript Basics \\u2014 Updated\",\n  \"description\": \"A tiny quiz on core JS (updated)\",\n  \"isPublished\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/quizzes/{{quizId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"quizzes",
+								"{{quizId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create question (MCQ)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"  const json = pm.response.json();",
+									"  if (json && json.id) {",
+									"    pm.collectionVariables.set('questionId', json.id);",
+									"    console.log('questionId set to', json.id);",
+									"  }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"mcq\",\n  \"prompt\": \"Which is NOT a primitive type?\",\n  \"options\": [\n    \"string\",\n    \"number\",\n    \"boolean\",\n    \"array\"\n  ],\n  \"correctAnswer\": \"3\",\n  \"position\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/quizzes/{{quizId}}/questions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"quizzes",
+								"{{quizId}}",
+								"questions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Questions",
+			"item": [
+				{
+					"name": "Update question (reorder to position 1)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"position\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/questions/{{questionId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"questions",
+								"{{questionId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete question",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/questions/{{questionId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"questions",
+								"{{questionId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attempts",
+			"item": [
+				{
+					"name": "Start attempt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"  const json = pm.response.json();",
+									"  if (json && json.id) {",
+									"    pm.collectionVariables.set('attemptId', json.id);",
+									"    console.log('attemptId set to', json.id);",
+									"  }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"quizId\": \"{{quizId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/attempts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"attempts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Answer (index value)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"questionId\": \"{{questionId}}\",\n  \"value\": \"3\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/attempts/{{attemptId}}/answer",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"attempts",
+								"{{attemptId}}",
+								"answer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit attempt",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/attempts/{{attemptId}}/submit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"attempts",
+								"{{attemptId}}",
+								"submit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Record event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event\": \"text pasted\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/attempts/{{attemptId}}/events",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"attempts",
+								"{{attemptId}}",
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:4000"
+		},
+		{
+			"key": "token",
+			"value": "dev-token"
+		},
+		{
+			"key": "quizId",
+			"value": "1"
+		},
+		{
+			"key": "questionId",
+			"value": "1"
+		},
+		{
+			"key": "attemptId",
+			"value": "1"
+		}
+	]
+}
