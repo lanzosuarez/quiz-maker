@@ -1,12 +1,14 @@
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { DefaultRouteError } from '@/components/default-route-error'
 import './index.css'
 import { routeTree } from './routeTree.gen'
 
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
+  defaultErrorComponent: DefaultRouteError,
 })
 
 declare module '@tanstack/react-router' {

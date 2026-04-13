@@ -4,7 +4,7 @@ Take-home app: build coding quizzes (multiple choice + short answer), share by q
 
 ## Requirements
 
-- **Node.js** `>=20.19` (see [`.nvmrc`](.nvmrc); Vite 8 and TanStack Router require it)
+- **Node.js** `>=20.19` (see `[.nvmrc](.nvmrc)`; Vite 8 and TanStack Router require it)
 - **Backend** running locally (default `http://localhost:4000`) with `Authorization: Bearer dev-token` (or your token)
 
 ## Setup
@@ -16,13 +16,15 @@ cp .env.example .env   # optional; defaults match the sample backend
 
 ## Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Vite dev server |
-| `npm run build` | Typecheck + production build |
-| `npm run preview` | Preview production build |
-| `npm run lint` | ESLint |
-| `npm run routes:generate` | Regenerate [`src/routeTree.gen.ts`](src/routeTree.gen.ts) after changing files under `src/routes/` |
+
+| Script                    | Description                                                                                        |
+| ------------------------- | -------------------------------------------------------------------------------------------------- |
+| `npm run dev`             | Vite dev server                                                                                    |
+| `npm run build`           | Typecheck + production build                                                                       |
+| `npm run preview`         | Preview production build                                                                           |
+| `npm run lint`            | ESLint                                                                                             |
+| `npm run routes:generate` | Regenerate `[src/routeTree.gen.ts](src/routeTree.gen.ts)` after changing files under `src/routes/` |
+
 
 After adding or renaming route files, run `npm run routes:generate` (or let `vite` / `vite build` run with the TanStack Router plugin, which updates the tree on build).
 
@@ -57,11 +59,11 @@ Open the URL shown in the terminal (usually `http://localhost:5173`).
 
 ## Anti-cheat (bonus)
 
-Hook: [`src/hooks/use-anti-cheat.ts`](src/hooks/use-anti-cheat.ts), wired from [`src/routes/play.$attemptId.tsx`](src/routes/play.$attemptId.tsx).
+Hook: `[src/hooks/use-anti-cheat.ts](src/hooks/use-anti-cheat.ts)`, wired from `[src/routes/play.$attemptId.tsx](src/routes/play.$attemptId.tsx)`.
 
-- **Signals**: `window` **`blur`** / **`focus`** → **`tab-blur`** / **`tab-focus`**; answer-field **`paste`** → **`text-pasted`**. The **Session signals** summary counts tab switches as **`tab-blur`** events only (not focus).
-- **Logged (server)**: Each signal is sent as **`POST /attempts/:attemptId/events`** with body `{ "event": "<name>" }` — [`recordEvent`](src/api/attempts.ts).
-- **Shown (UI)**: After submit, [`src/routes/results.$attemptId.tsx`](src/routes/results.$attemptId.tsx) shows [`AntiCheatSummary`](src/components/results/anti-cheat-summary.tsx) (“Session signals”): counts plus a **timestamp + event name** list. The same data is persisted with the graded result in **`sessionStorage`** ([`src/lib/session.ts`](src/lib/session.ts)) so the results view survives refresh.
+- **Signals**: `window` `**blur`** / `**focus**` → `**tab-blur**` / `**tab-focus**`; answer-field `**paste**` → `**text-pasted**`. The **Session signals** summary counts tab switches as `**tab-blur`** events only (not focus).
+- **Logged (server)**: Each signal is sent as `**POST /attempts/:attemptId/events`** with body `{ "event": "<name>" }` — `[recordEvent](src/api/attempts.ts)`.
+- **Shown (UI)**: After submit, `[src/routes/results.$attemptId.tsx](src/routes/results.$attemptId.tsx)` shows `[AntiCheatSummary](src/components/results/anti-cheat-summary.tsx)` (“Session signals”): counts plus a **timestamp + event name** list. The same data is persisted with the graded result in `**sessionStorage`** (`[src/lib/session.ts](src/lib/session.ts)`) so the results view survives refresh.
 
 ## License
 

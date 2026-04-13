@@ -43,6 +43,6 @@ Open the URL shown (typically `http://localhost:5173`). The sample `.env` points
 
 ## More detail
 
-- **Backend**: see [`backend/README.md`](backend/README.md)
-- **Frontend**: see [`frontend/README.md`](frontend/README.md)
+- **Backend**: see `[backend/README.md](backend/README.md)`
+- **Frontend**: see `[frontend/README.md](frontend/README.md)`
 

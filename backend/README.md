@@ -18,14 +18,14 @@ npm run seed
 npm run dev    # or: npm start
 ```
 
-By default the API runs on **http://localhost:4000** and requires `Authorization: Bearer ${API_TOKEN}` on every request.
+By default the API runs on **[http://localhost:4000](http://localhost:4000)** and requires `Authorization: Bearer ${API_TOKEN}` on every request.
 
 - Default token (from `.env.example`): `dev-token`
 - Set your own in `.env` → `API_TOKEN=your-secret`
 
 ### Node.js and `better-sqlite3`
 
-This project uses **`better-sqlite3` 12.x**, which ships **prebuilt binaries** for current Node versions (including **Node 24** on Windows). You should not need Python or a C++ toolchain for a normal `npm i`.
+This project uses `**better-sqlite3` 12.x**, which ships **prebuilt binaries** for current Node versions (including **Node 24** on Windows). You should not need Python or a C++ toolchain for a normal `npm i`.
 
 If `npm i` still tries to compile `better-sqlite3` and fails (for example with **node-gyp** / **Python** errors):
 
@@ -35,6 +35,7 @@ If `npm i` still tries to compile `better-sqlite3` and fails (for example with *
 ## Endpoints (contract used by the take-home)
 
 **Entities**
+
 - `Quiz` → `{ id, title, description, timeLimitSeconds?, isPublished, createdAt }`
 - `Question` → `{ id, quizId, type: 'mcq'|'short'|'code', prompt, options?[], correctAnswer? , position }`
 - `Attempt` → `{ id, quizId, startedAt, submittedAt?, answers: Array<{questionId, value}>, score? }`
@@ -55,6 +56,7 @@ If `npm i` still tries to compile `better-sqlite3` and fails (for example with *
 > Auto-grading covers **MCQ** and **short**; **code** prompts are not auto-graded and do not affect `score`.
 
 ### Notes
+
 - **Auth:** All routes require `Authorization: Bearer <API_TOKEN>`.
 - **Order:** Questions are ordered by `position ASC`. To reorder, `PATCH /questions/:id` with a new `position` (simple numeric ordering; collisions are tolerated).
 - **MCQ answers:** The taker can send either the selected **option index** or the **option text**. The grader accepts both.
@@ -65,6 +67,8 @@ If `npm i` still tries to compile `better-sqlite3` and fails (for example with *
 ---
 
 ## Dev tips
+
 - SQLite file is created at project root (`data.sqlite`).
 - Re-run `npm run seed` to reset the sample data.
 - Feel free to change the CORS origin in `src/server.js`.
+
